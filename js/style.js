@@ -219,9 +219,8 @@ function checkCollision() {
         punkt2.x = RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
     }
     if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) >= (KREISRADIUS - PUNKTRADIUS)) {
-        punkt3.x = RANDINDEX_X + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS + 
-                (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
-        punkt3.y = (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
+        punkt3.x = (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
+        punkt3.y = RANDINDEX_Y + KREISRADIUS + (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
     }
 
 }
@@ -259,25 +258,25 @@ function drawPoints() {
                 switch (window.orientation) {
                     case 0:
                         accelx = event.accelerationIncludingGravity.x * (-1);
-                        accely = event.accelerationIncludingGravity.y * (-1);
+                        accely = event.accelerationIncludingGravity.y;
                         accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
                     case -90:
                         accelx = event.accelerationIncludingGravity.y * (-1);
-                        accely = event.accelerationIncludingGravity.x;
+                        accely = event.accelerationIncludingGravity.x * (-1);
                         accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
                     case 90:
                         accelx = event.accelerationIncludingGravity.y;
-                        accely = event.accelerationIncludingGravity.x * (-1);
+                        accely = event.accelerationIncludingGravity.x;
                         accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
                     case 180:
                         accelx = event.accelerationIncludingGravity.x;
-                        accely = event.accelerationIncludingGravity.y;
+                        accely = event.accelerationIncludingGravity.y * (-1);
                         accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
