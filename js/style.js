@@ -111,6 +111,7 @@ function init(){
 
 			refresh = 75;
             mode = 0;
+
 		}
 
 
@@ -133,7 +134,7 @@ function draw(){
     phoneTilty = -accely * ballInertiay;
 */
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    alert(mode);
 	switch(mode) {
         case 0:
             drawBackgroundAll();
@@ -320,7 +321,8 @@ function drawPoints() {
                 switch (window.orientation) {
                     case 0:
                         accelz = event.accelerationIncludingGravity.z * (-1);
-                        if(accelz <= 3 && accelz >= -3) {
+                        alert(accelz);
+                        if(-3 <= accelz && accelz <= 3) {
                             accelx = event.accelerationIncludingGravity.x * (-1);
                             accely = event.accelerationIncludingGravity.y;
                             if(!(accely <= 8 && accely >= -8)) {
