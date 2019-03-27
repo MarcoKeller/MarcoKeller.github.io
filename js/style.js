@@ -74,6 +74,7 @@ function initCanvas(){
 	if(canvas.getContext){
         ctx = canvas.getContext('2d');
     }
+    document.getElementById('test').firstChild.text = "Hallo";
 }
 
 function setScreen(){
@@ -117,24 +118,8 @@ function init(){
 
 function draw(){
     setScreen();
-	//Ball bewegt sich von der Wand weg, Ballträgheit zurücksetzen
-    /*if (lastAccx * accelx < 0){
-		ballInertiax = BALLINERTIA;
-		lastBricky = -1;
-	}
-    if (lastAccy * accely < 0) {
-		ballInertiay = BALLINERTIA;
-		lastBrickx = -1;
-	}
-             
-    lastAccx = accelx;
-    lastAccy = accely;
-               
-    phoneTiltx = accelx * ballInertiax;
-    phoneTilty = -accely * ballInertiay;
-*/
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    alert(mode);
 	switch(mode) {
         case 0:
             drawBackgroundAll();
@@ -167,7 +152,7 @@ function drawBackgroundVertical() {
         ctx.stroke();
 }
 
-function drawBackgroundVertical() {
+function drawBackgroundHorizontal() {
     ctx.fillStyle = 'hsla(120,100%,50%,0.2)';
 
     ctx.strokeRect(RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK ,RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK,
@@ -321,7 +306,7 @@ function drawPoints() {
                 switch (window.orientation) {
                     case 0:
                         accelz = event.accelerationIncludingGravity.z * (-1);
-                        document.getElementById('test').text = accelz;
+                        //document.getElementById('test').firstChild.text = accelz;
                         if(-3 <= accelz && accelz <= 3) {
                             accelx = event.accelerationIncludingGravity.x * (-1);
                             accely = event.accelerationIncludingGravity.y;
