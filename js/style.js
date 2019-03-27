@@ -6,30 +6,29 @@ const RANDINDEX_Y = 40;
 const RANDINDEX_X = 220;
 const DIFF_KREIS_RECHTECK = 20;
 
-const PUNKTRADIUS = 30;
+const PUNKTRADIUS = 20;
 const KREISRADIUS = 130;
-//Startkoordinaten Ball
-const XINIT = 770;
-const YINIT = 200 - PUNKTRADIUS;
 
 //Zeitintervall für Bildschirmwiederholung
 var refresh = 10;
 //ID von setIntervall;
 var refreshID;
 
- //Aktuell ausgelesene Beschleunigung aus dem Beschleunigungssensor
+ //Aktuell ausgelesene Werte der Orientierungssensoren
 var accelx = 0.0;
 var accely = 0.0;
+var accelz = 0.0;
 
 //Beschleunigung im letzten Intervall
 // aktuelle Beschleunigung * letzte < 0 bedeutet Richtungsänderung
 var lastAccx = 0;
 var lastAccy = 0;
+var lastAccz = 0;
 
-//Position des Balls
-var x = XINIT;
-var y = YINIT;
-var punkt1 = { x: RANDINDEX_X + PUNKTRADIUS, y: RANDINDEX_Y + KREISRADIUS, radius: PUNKTRADIUS };
+var INIT_X_1 = RANDINDEX_X + PUNKTRADIUS;
+var INIT_Y_1 = RANDINDEX_Y + KREISRADIUS;
+
+var punkt1 = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
 var punkt2 = { x: RANDINDEX_X + 2* PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS, 
 			   y: RANDINDEX_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS, radius: PUNKTRADIUS };
 var punkt3 = { x: RANDINDEX_X + 2* PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS, y: RANDINDEX_Y + KREISRADIUS, radius: PUNKTRADIUS };
@@ -39,6 +38,7 @@ function startWasserwaage() {
 	initCanvas();
 	init();
 	refreshID = setInterval(draw, refresh);
+    canvas.webkitRequestFullScreen();
 }
 
 /*function showInfoScreen(txt){
@@ -105,18 +105,17 @@ function init(){
 			//Aktuell ausgelesene Beschleunigung aus dem Beschleunigungssensor
 			accelx = 0.0;
 			accely = 0.0;
+            accelz = 0.0;
 
 			//Beschleunigung im letzten Intervall
 			// aktuelle Beschleunigung * letzte < 0 bedeutet Richtungsänderung
 			lastAccx = 0;
 			lastAccy = 0;
-
-			//Position des Balls
-			x = XINIT;
-			y = YINIT;			
+            lastAccz = 0;		
 
 			refresh = 10;
 		}
+
 
 function draw(){
     setScreen();
@@ -150,12 +149,14 @@ function drawBackground() {
          		RANDINDEX_Y + KREISRADIUS, KREISRADIUS, 0, Math.PI * 2);
         ctx.fillStyle = "hsla(120,100%,50%,0.2)";
         ctx.fill();
+        ctx.stroke();
         ctx.closePath();
     ctx.beginPath();
         ctx.arc(RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS,
         		 RANDINDEX_Y + KREISRADIUS, PUNKTRADIUS + 2, 0, Math.PI * 2);
-        ctx.fillStyle = "#f4f4f4";
-        ctx.fill();
+        //ctx.fillStyle = "#f4f4f4";
+        //ctx.fill();
+        ctx.stroke();
         ctx.closePath();
 
     // vertikales Rechteck
@@ -192,6 +193,8 @@ function drawBackground() {
 
 function drawPoints() {
 
+        punkt1.y = INIT_Y_1 + (KREISRADIUS - PUNKTRADIUS) * accely;
+
 		//punkt1.x = punkt1.x + 3* way; 
         ctx.beginPath();
         ctx.arc(punkt1.x, punkt1.y, PUNKTRADIUS, 0, Math.PI * 2);
@@ -206,12 +209,12 @@ function drawPoints() {
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.arc(punkt3.x, punkt3.y, PUNKTRADIUS, 0, Math.PI * 2);
+        ctx.arc(punkt3.x+200, punkt3.y, PUNKTRADIUS, 0, Math.PI * 2);
         ctx.fillStyle = "#04B45F";
         ctx.fill();
         ctx.closePath();
 }
-/*
+
 //Ermittelt die Beschleunigung entsprechend der Bildschirmorientierung
         if (window.DeviceOrientationEvent) {
             window.addEventListener("devicemotion", function (event) {
@@ -219,21 +222,25 @@ function drawPoints() {
                     case 0:
                         accelx = event.accelerationIncludingGravity.x * (-1);
                         accely = event.accelerationIncludingGravity.y * (-1);
+                        accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
                     case -90:
                         accelx = event.accelerationIncludingGravity.y * (-1);
                         accely = event.accelerationIncludingGravity.x;
+                        accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
                     case 90:
                         accelx = event.accelerationIncludingGravity.y;
                         accely = event.accelerationIncludingGravity.x * (-1);
+                        accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
                     case 180:
                         accelx = event.accelerationIncludingGravity.x;
                         accely = event.accelerationIncludingGravity.y;
+                        accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
                 }
@@ -241,4 +248,3 @@ function drawPoints() {
         } else {
             alert("Sorry, ihr Gerät unterstützt keine Bildschirmorientierung!");
         }
-		showInfoScreen('Spiel im Vollbildmodus starten!'); */
