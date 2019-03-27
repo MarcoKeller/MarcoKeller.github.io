@@ -213,10 +213,10 @@ function checkCollision() {
         punkt2.x = RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
     }
     if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) > (KREISRADIUS - PUNKTRADIUS)) {
-        var x = getCircleValueX(INIT_X_3, (punkt3.y - INIT_Y_3), (punkt3.x -INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
-        var y = getCircleValueY(INIT_Y_3, (punkt3.y - INIT_Y_3), (punkt3.x -INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
-        punkt3.x = x;
-        punkt3.y = y;
+        var x = getCircleValueX(INIT_X_3, (punkt3.y - INIT_Y_3), (punkt3.x - INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
+        var y = getCircleValueY(INIT_Y_3, (punkt3.y - INIT_Y_3), (punkt3.x - INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
+        punkt3.x = (x*(-1));
+        punkt3.y = (y*(-1));
     }
 
 }
