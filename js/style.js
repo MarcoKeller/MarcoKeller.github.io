@@ -139,6 +139,8 @@ function draw(){
 
 	
     drawBackground();
+    setPointsPosition();
+    checkCollision();
     drawPoints();    
 }
 
@@ -191,9 +193,22 @@ function drawBackground() {
         ctx.stroke();
 }
 
+function setPointsPosition() {
+    punkt1.y = INIT_Y_1 + (KREISRADIUS - PUNKTRADIUS) * accely;
+}
+
+function checkCollision() {
+    if(punkt1.y <= RANDINDEX_Y + PUNKTRADIUS) {
+        punkt1.y = RANDINDEX_Y + PUNKTRADIUS;
+    }
+    if(punkt1.y >= RANDINDEX_Y + 2 * KREISRADIUS - PUNKTRADIUS) {
+        punkt1.y = RANDINDEX_Y + 2 * KREISRADIUS - PUNKTRADIUS;
+    }
+}
+
 function drawPoints() {
 
-        punkt1.y = INIT_Y_1 + (KREISRADIUS - PUNKTRADIUS) * accely;
+        
 
 		//punkt1.x = punkt1.x + 3* way; 
         ctx.beginPath();
