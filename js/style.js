@@ -321,7 +321,7 @@ function drawPoints() {
                 switch (window.orientation) {
                     case 0:
                         accelz = event.accelerationIncludingGravity.z * (-1);
-                        alert(accelz);
+                        document.getElementById('test').text = accelz;
                         if(-3 <= accelz && accelz <= 3) {
                             accelx = event.accelerationIncludingGravity.x * (-1);
                             accely = event.accelerationIncludingGravity.y;
