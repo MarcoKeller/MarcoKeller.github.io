@@ -213,18 +213,24 @@ function checkCollision() {
         punkt2.x = RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
     }
     if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) > (KREISRADIUS - PUNKTRADIUS)) {
-        punkt3.x = (-1) * getCircleValueX(INIT_X_3, (punkt3.y - INIT_Y_3), (punkt3.x - INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
-        punkt3.y = getCircleValueY(INIT_Y_3, (punkt3.y - INIT_Y_3), (punkt3.x - INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
-        //punkt3.x = (x*(-1));
-        //punkt3.y = (y*(-1));
+        var x = getCircleValueX(INIT_X_3, (punkt3.y - INIT_Y_3), (punkt3.x - INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
+        var y = getCircleValueY(INIT_Y_3, (punkt3.y - INIT_Y_3), (punkt3.x - INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
+        punkt3.x = x;
+        punkt3.y = y;
     }
 
 }
 
 function getCircleValueX(offset, rangeY, rangeX, radian) {
+    if(rangeX < 0) {
+        return offset + radian * Math.cos(Math.atan(rangeY/rangeX)) * (-1);
+     }
     return offset + radian * Math.cos(Math.atan(rangeY/rangeX));
 }
 function getCircleValueY(offset, rangeY, rangeX, radian) {
+    if(rangeX < 0) {
+        return offset + radian * Math.sin(Math.atan(rangeY/rangeX)) * (-1);
+     }
     return offset + radian * Math.sin(Math.atan(rangeY/rangeX));
 }
 
