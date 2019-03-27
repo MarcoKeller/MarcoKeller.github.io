@@ -108,15 +108,9 @@ function init(){
 			//Aktuell ausgelesene Beschleunigung aus dem Beschleunigungssensor
 			accelx = 0.0;
 			accely = 0.0;
-            accelz = 0.0;
+            accelz = 0.0;	
 
-			//Beschleunigung im letzten Intervall
-			// aktuelle Beschleunigung * letzte < 0 bedeutet Richtungsänderung
-			lastAccx = 0;
-			lastAccy = 0;
-            lastAccz = 0;		
-
-			refresh = 100;
+			refresh = 75;
 		}
 
 
@@ -219,10 +213,8 @@ function checkCollision() {
         punkt2.x = RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
     }
     if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) > (KREISRADIUS - PUNKTRADIUS)) {
-        punkt3.x = INIT_X_3;
-        // - (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
-        punkt3.y = INIT_Y_3; 
-        //- (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
+        punkt3.x = INIT_X_3 - (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
+        punkt3.y = INIT_Y_3 - (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
     }
 
 }
