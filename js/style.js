@@ -198,6 +198,7 @@ function drawBackground() {
 
 function setPointsPosition() {
     punkt1.y = INIT_Y_1 + (KREISRADIUS - PUNKTRADIUS) * accely;
+
     punkt2.x = INIT_X_2 + (KREISRADIUS - PUNKTRADIUS) * accelx;
 
     punkt3.y = INIT_Y_3 + (KREISRADIUS - PUNKTRADIUS) * accely;
@@ -211,6 +212,23 @@ function checkCollision() {
     if(punkt1.y >= RANDINDEX_Y + 2 * KREISRADIUS - PUNKTRADIUS) {
         punkt1.y = RANDINDEX_Y + 2 * KREISRADIUS - PUNKTRADIUS;
     }
+    if(punkt2.x <= RANDINDEX_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK) {
+        punkt2.x = RANDINDEX_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK;
+    }
+    if(punkt2.x >= RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS) {
+        punkt2.x = RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
+    }
+    if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) >= (KREISRADIUS - PUNKTRADIUS)) {
+        punkt3.x = (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.acos( punkt3.x / getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y)));
+        punkt3.y = (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.asin( punkt3.y / getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y)));
+    }
+
+}
+
+function getDistanceBetweenPositions(StartX, StartY, EndX, EndY) {
+    var distanceX = StartX - EndX;
+    var distanceY = StartY - EndY;
+    return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 }
 
 function drawPoints() {
