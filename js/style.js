@@ -27,11 +27,14 @@ var lastAccz = 0;
 
 var INIT_X_1 = RANDINDEX_X + PUNKTRADIUS;
 var INIT_Y_1 = RANDINDEX_Y + KREISRADIUS;
+var INIT_X_2 = RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
+var INIT_Y_2 = RANDINDEX_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS;
+var INIT_X_3 = RANDINDEX_X + 2* PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
+var INIT_Y_3 = RANDINDEX_Y + KREISRADIUS;
 
 var punkt1 = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
-var punkt2 = { x: RANDINDEX_X + 2* PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS, 
-			   y: RANDINDEX_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS, radius: PUNKTRADIUS };
-var punkt3 = { x: RANDINDEX_X + 2* PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS, y: RANDINDEX_Y + KREISRADIUS, radius: PUNKTRADIUS };
+var punkt2 = { x: INIT_X_2, y: INIT_Y_2, radius: PUNKTRADIUS };
+var punkt3 = { x: INIT_X_3, y: INIT_Y_3, radius: PUNKTRADIUS };
 var way = 1;
 
 function startWasserwaage() {
@@ -195,6 +198,10 @@ function drawBackground() {
 
 function setPointsPosition() {
     punkt1.y = INIT_Y_1 + (KREISRADIUS - PUNKTRADIUS) * accely;
+    punkt2.x = INIT_X_2 + (KREISRADIUS - PUNKTRADIUS) * accelx;
+
+    punkt3.y = INIT_Y_3 + (KREISRADIUS - PUNKTRADIUS) * accely;
+    punkt3.x = INIT_X_3 + (KREISRADIUS - PUNKTRADIUS) * accelx;
 }
 
 function checkCollision() {
@@ -207,9 +214,6 @@ function checkCollision() {
 }
 
 function drawPoints() {
-
-        
-
 		//punkt1.x = punkt1.x + 3* way; 
         ctx.beginPath();
         ctx.arc(punkt1.x, punkt1.y, PUNKTRADIUS, 0, Math.PI * 2);
@@ -224,7 +228,7 @@ function drawPoints() {
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.arc(punkt3.x+200, punkt3.y, PUNKTRADIUS, 0, Math.PI * 2);
+        ctx.arc(punkt3.x, punkt3.y, PUNKTRADIUS, 0, Math.PI * 2);
         ctx.fillStyle = "#04B45F";
         ctx.fill();
         ctx.closePath();
