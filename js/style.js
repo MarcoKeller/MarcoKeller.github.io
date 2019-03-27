@@ -220,9 +220,8 @@ function checkCollision() {
     }
     if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) >= (KREISRADIUS - PUNKTRADIUS)) {
         punkt3.x = RANDINDEX_X + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS + 
-                (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.acos((punkt3.x - INIT_X_3) / getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y)));
-        punkt3.y = RANDINDEX_Y +
-                (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.asin((punkt3.y - INIT_Y_3) / getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y)));
+                (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
+        punkt3.y = (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
     }
 
 }
