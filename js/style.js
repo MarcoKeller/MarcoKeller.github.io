@@ -29,7 +29,7 @@ var INIT_X_1 = RANDINDEX_X + PUNKTRADIUS;
 var INIT_Y_1 = RANDINDEX_Y + KREISRADIUS;
 var INIT_X_2 = RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
 var INIT_Y_2 = RANDINDEX_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS;
-var INIT_X_3 = RANDINDEX_X + 2* PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
+var INIT_X_3 = RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
 var INIT_Y_3 = RANDINDEX_Y + KREISRADIUS;
 
 var punkt1 = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
@@ -116,7 +116,7 @@ function init(){
 			lastAccy = 0;
             lastAccz = 0;		
 
-			refresh = 10;
+			refresh = 100;
 		}
 
 
@@ -218,10 +218,10 @@ function checkCollision() {
     if(punkt2.x >= RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS) {
         punkt2.x = RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
     }
-    if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) >= (KREISRADIUS - PUNKTRADIUS)) {
-        punkt3.x = RANDINDEX_X + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS + KREISRADIUS;
+    if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) > (KREISRADIUS - PUNKTRADIUS)) {
+        punkt3.x = INIT_X_3;
         // - (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
-        punkt3.y = RANDINDEX_Y + KREISRADIUS; 
+        punkt3.y = INIT_Y_3; 
         //- (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
     }
 
