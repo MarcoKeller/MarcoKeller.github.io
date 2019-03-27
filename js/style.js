@@ -213,12 +213,19 @@ function checkCollision() {
         punkt2.x = RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
     }
     if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, punkt3.x, punkt3.y) > (KREISRADIUS - PUNKTRADIUS)) {
-        var x = INIT_X_3 - (KREISRADIUS - PUNKTRADIUS) * Math.cos(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
-        var y = INIT_Y_3 - (KREISRADIUS - PUNKTRADIUS) * Math.sin(Math.atan((punkt3.y - INIT_Y_3) / (punkt3.x -INIT_X_3)));
+        var x = getCircleValueX(INIT_X_3, (punkt3.y - INIT_Y_3), (punkt3.x -INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
+        var y = getCircleValueY(INIT_Y_3, (punkt3.y - INIT_Y_3), (punkt3.x -INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
         punkt3.x = x;
         punkt3.y = y;
     }
 
+}
+
+function getCircleValueX(offset, rangeY, rangeX, radian) {
+    return offset + radian * Math.cos(Math.atan(rangeY/rangeX));
+}
+function getCircleValueY(offset, rangeY, rangeX, radian) {
+    return offset + radian * Math.sin(Math.atan(rangeY/rangeX));
 }
 
 function getDistanceBetweenPositions(StartX, StartY, EndX, EndY) {
