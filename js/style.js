@@ -272,8 +272,8 @@ function drawPoints() {
                         break;
 
                     case 90:
-                        accelx = Math.round(event.accelerationIncludingGravity.y);
-                        accely = Math.round(event.accelerationIncludingGravity.x);
+                        accelx = event.accelerationIncludingGravity.y;
+                        accely = event.accelerationIncludingGravity.x;
                         accelz = event.accelerationIncludingGravity.z * (-1);
                         break;
 
