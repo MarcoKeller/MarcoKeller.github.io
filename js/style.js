@@ -334,6 +334,7 @@ function checkCollision() {
     		}
 			break;
 	}
+	alert("Collision end");
 }
 
 function getCircleValueX(offset, rangeY, rangeX, radian) {
