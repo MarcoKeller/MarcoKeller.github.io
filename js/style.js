@@ -130,7 +130,7 @@ function draw(){
     setScreen();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //mode = 0;
+    mode = 2;
 	switch(mode) {
         case 0:
         	PUNKTRADIUS = 25;
@@ -300,34 +300,38 @@ function setPointsPosition() {
 
 function checkCollision() {
 	switch(mode) {
-			case 0:
-				if(points[1].y <= OFFSET_Y + PUNKTRADIUS) {
-        			points[1].y = OFFSET_Y + PUNKTRADIUS;
-    			}
-    			if(points[1].y >= OFFSET_Y + 2 * KREISRADIUS - PUNKTRADIUS) {
-        			points[1].y = OFFSET_Y + 2 * KREISRADIUS - PUNKTRADIUS;
-    			}
-    			if(points[2].x <= OFFSET_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK) {
-        			points[2].x = OFFSET_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK;
-    			}
-    			if(points[2].x >= OFFSET_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS) {
-        			points[2].x = OFFSET_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
-    			}
+		case 0:
+			if(points[1].y <= OFFSET_Y + PUNKTRADIUS) {
+        		points[1].y = OFFSET_Y + PUNKTRADIUS;
+    		}
+    		if(points[1].y >= OFFSET_Y + 2 * KREISRADIUS - PUNKTRADIUS) {
+        		points[1].y = OFFSET_Y + 2 * KREISRADIUS - PUNKTRADIUS;
+    		}
+    		if(points[2].x <= OFFSET_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK) {
+        		points[2].x = OFFSET_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK;
+    		}
+    		if(points[2].x >= OFFSET_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS) {
+        		points[2].x = OFFSET_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
+    		}
 
-    			if(getDistanceBetweenPositions(INIT_X_1, INIT_Y_1, points[0].x, points[0].y) > (KREISRADIUS - PUNKTRADIUS)) {
-        			var tempx = getCircleValueX(INIT_X_1, (points[0].y - INIT_Y_1), (points[0].x - INIT_X_1), (KREISRADIUS - PUNKTRADIUS));
-        			var tempy = getCircleValueY(INIT_Y_1, (points[0].y - INIT_Y_1), (points[0].x - INIT_X_1), (KREISRADIUS - PUNKTRADIUS));
-        			points[0].x = tempx;
-        			points[0].y = tempy;
-    			}
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
+    		if(getDistanceBetweenPositions(INIT_X_1, INIT_Y_1, points[0].x, points[0].y) > (KREISRADIUS - PUNKTRADIUS)) {
+        		var tempx = getCircleValueX(INIT_X_1, (points[0].y - INIT_Y_1), (points[0].x - INIT_X_1), (KREISRADIUS - PUNKTRADIUS));
+        		var tempy = getCircleValueY(INIT_Y_1, (points[0].y - INIT_Y_1), (points[0].x - INIT_X_1), (KREISRADIUS - PUNKTRADIUS));
+        		points[0].x = tempx;
+        		points[0].y = tempy;
+    		}
+			break;
+		case 1:
+			break;
+		case 2:
+			if(points[2].x <= OFFSET_X + 13 * PUNKTRADIUS) {
+        		points[2].x = OFFSET_X + 13 * PUNKTRADIUS;
+    		}
+    		if(points[2].x >= OFFSET_X + PUNKTRADIUS) {
+        		points[2].x = OFFSET_X + PUNKTRADIUS;
+    		}
+			break;
 	}
-    
-
 }
 
 function getCircleValueX(offset, rangeY, rangeX, radian) {
