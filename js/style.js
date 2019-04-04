@@ -410,11 +410,11 @@ if (window.DeviceOrientationEvent) {
     	        accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
     	        if(-5 <= accelz && accelz <= 5) {
                 	if(!(accely <= 8 && accely >= -8)) {
-                    	mode = 1;
+                    	mode = 2;
                     	break;
 	                }
     	            if(!(accelx <= 8 && accelx >= -8)) {
-        	            mode = 2;
+        	            mode = 1;
             	        break;
                 	}
 	            } else {
@@ -427,11 +427,11 @@ if (window.DeviceOrientationEvent) {
         	    accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
         	    if(-5 <= accelz && accelz <= 5) {
                 	if(!(accely <= 8 && accely >= -8)) {
-                    	mode = 1;
+                    	mode = 2;
                     	break;
 	                }
     	            if(!(accelx <= 8 && accelx >= -8)) {
-        	            mode = 2;
+        	            mode = 1;
             	        break;
                 	}
 	            } else {
