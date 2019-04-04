@@ -131,6 +131,7 @@ function draw(){
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     mode = 0;
+	
 	switch(mode) {
         case 0:
         	PUNKTRADIUS = 25;
