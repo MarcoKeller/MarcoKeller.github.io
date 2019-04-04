@@ -62,11 +62,11 @@ var isMobile = {
 }; 
 
 function startWasserwaage() {
-   /* if (!isMobile.any()) {
+    if (!isMobile.any()) {
         var result = 'Die Wasserwaage funktioniert nur auf mobilen Geräten!';
         alert(result);
         return;
-    } */
+    } 
     if (!isMobile.iOS()) {
     	iOS_X = -1.0;
 		iOS_Y = -1.0;
@@ -371,7 +371,7 @@ function drawPoints() {
         var max = 3;
         switch(mode) {
             case 0: break;
-            case 1: min = 1; max = 1; break;
+            case 1: min = 1; max = 2; break;
             case 2: min = 2; break;
         } 
         for(var i = min; i < max; i++) {
