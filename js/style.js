@@ -325,10 +325,10 @@ function checkCollision() {
 		case 1:
 			break;
 		case 2:
-			if(points[2].x <= OFFSET_X + 13 * PUNKTRADIUS) {
+			if(points[2].x >= OFFSET_X + 13 * PUNKTRADIUS) {
         		points[2].x = OFFSET_X + 13 * PUNKTRADIUS;
     		}
-    		if(points[2].x >= OFFSET_X + PUNKTRADIUS) {
+    		if(points[2].x <= OFFSET_X + PUNKTRADIUS) {
         		points[2].x = OFFSET_X + PUNKTRADIUS;
     		}
 			break;
