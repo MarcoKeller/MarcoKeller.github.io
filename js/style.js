@@ -325,11 +325,12 @@ function checkCollision() {
 		case 1:
 			break;
 		case 2:
-			if(points[2].x >= OFFSET_X + 13 * PUNKTRADIUS) {
-        		points[2].x = OFFSET_X + 13 * PUNKTRADIUS;
+			alert("mode 2 Collision");
+			if(points[2].x >= (INIT_X_3 + 6 * PUNKTRADIUS)) {
+        		points[2].x = (INIT_X_3 + 6 * PUNKTRADIUS);
     		}
-    		if(points[2].x <= OFFSET_X + PUNKTRADIUS) {
-        		points[2].x = OFFSET_X + PUNKTRADIUS;
+    		if(points[2].x <= (INIT_X_3 - 6 * PUNKTRADIUS)) {
+        		points[2].x = (INIT_X_3 - 6 * PUNKTRADIUS);
     		}
 			break;
 	}
