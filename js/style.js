@@ -157,7 +157,7 @@ function draw(){
             break;
     }
     setPointsPosition();
-    checkCollision();
+    //checkCollision();
     drawPoints();    
 }
 
