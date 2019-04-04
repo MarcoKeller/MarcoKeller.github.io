@@ -157,7 +157,7 @@ function draw(){
             break;
     }
     setPointsPosition();
-    //checkCollision();
+    checkCollision();
     drawPoints();    
 }
 
@@ -325,7 +325,7 @@ function checkCollision() {
 		case 1:
 			break;
 		case 2:
-			alert("mode 2 Collision");
+	//		alert("mode 2 Collision");
 			if(points[2].x >= (INIT_X_3 + 6 * PUNKTRADIUS)) {
         		points[2].x = (INIT_X_3 + 6 * PUNKTRADIUS);
     		}
@@ -334,7 +334,7 @@ function checkCollision() {
     		}
 			break;
 	}
-	alert("Collision end");
+	//alert("Collision end");
 }
 
 function getCircleValueX(offset, rangeY, rangeX, radian) {
