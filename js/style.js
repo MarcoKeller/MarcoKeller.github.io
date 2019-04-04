@@ -130,7 +130,7 @@ function draw(){
     setScreen();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    mode = 2;
+    mode = 1;
 	
 	switch(mode) {
         case 0:
@@ -323,9 +323,14 @@ function checkCollision() {
     		}
 			break;
 		case 1:
+			if(points[1].y >= (INIT_Y_2 + 3.5 * PUNKTRADIUS)) {
+        		points[1].y = (INIT_Y_2 + 3.5 * PUNKTRADIUS);
+    		}
+    		if(points[1].y <= (INIT_Y_2 - 3.5 * PUNKTRADIUS)) {
+        		points[1].y = (INIT_Y_2 - 3.5 * PUNKTRADIUS);
+    		}
 			break;
 		case 2:
-	//		alert("mode 2 Collision");
 			if(points[2].x >= (INIT_X_3 + 6 * PUNKTRADIUS)) {
         		points[2].x = (INIT_X_3 + 6 * PUNKTRADIUS);
     		}
@@ -334,7 +339,6 @@ function checkCollision() {
     		}
 			break;
 	}
-	//alert("Collision end");
 }
 
 function getCircleValueX(offset, rangeY, rangeX, radian) {
