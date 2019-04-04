@@ -369,11 +369,11 @@ function getDistanceBetweenPositions(StartX, StartY, EndX, EndY) {
 function drawPoints() {
 		var min = 0;
         var max = 3;
-       /* switch(mode) {
+        switch(mode) {
             case 0: break;
             case 1: max = 1; break;
             case 2: min = 1; max = 2; break;
-        } */
+        } 
         for(var i = min; i < max; i++) {
             ctx.beginPath();
             ctx.arc(points[i].x, points[i].y, PUNKTRADIUS, 0, Math.PI * 2);
@@ -393,11 +393,11 @@ if (window.DeviceOrientationEvent) {
                 accely = iOS_Y * event.accelerationIncludingGravity.y;
             	if(-5 <= accelz && accelz <= 5) {
                 	if(!(accely <= 8 && accely >= -8)) {
-                    	mode = 2;
+                    	mode = 1;
                     	break;
 	                }
     	            if(!(accelx <= 8 && accelx >= -8)) {
-        	            mode = 1;
+        	            mode = 2;
             	        break;
                 	}
 	            } else {
