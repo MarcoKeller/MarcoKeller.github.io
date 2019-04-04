@@ -8,8 +8,11 @@ const RANDINDEX_X = 220;
 const DIFF_KREIS_RECHTECK = 20;
 
 //Radius
-const PUNKTRADIUS = 20;
-const KREISRADIUS = 130;
+var PUNKTRADIUS = 20;
+var KREISRADIUS = 6.5 * PUNKTRADIUS;
+
+const VERTICAL_OFFSET_X = 150; 
+const VERTICAL_PLUS_Y = 60;
 
 //Zeitintervall für Bildschirmwiederholung
 var refresh = 10;
@@ -20,6 +23,11 @@ var refreshID;
 var accelx = 0.0;
 var accely = 0.0;
 var accelz = 0.0;
+
+// Vorzeichen der ausgelesenen Orientierungssensoren (Bei iOS um Faktor -1 anders als beim Rest)
+var iOS_X = 1.0;
+var iOS_Y = 1.0;
+var iOS_Z = 1.0;
 
 //InitialPosition der drei Punkte im mode 0
 var INIT_X_1 = RANDINDEX_X + PUNKTRADIUS;
@@ -36,33 +44,57 @@ points[2] = { x: INIT_X_3, y: INIT_Y_3, radius: PUNKTRADIUS };
 // Anzeigemodus (0 = Alles, 1 = Vertical, 2 = Horizontal)
 var mode = 0;
 
+var isMobile = {
+    Android: function () {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function () {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function () {
+        return navigator.userAgent.match(/iPhone|iPod|iPad/i);
+    },
+    Opera: function () {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function () {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function () {
+        return ((isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()));
+    }
+}; 
+
 function startWasserwaage() {
+	var result = 'No mobile device';
+    if (isMobile.any()) {
+        result = 'Your on a mobile device';
+    }
+    alert(result);
+    if (!isMobile.iOS()) {
+    	iOS_X = -1.0;
+		iOS_Y = -1.0;
+		iOS_Z = -1.0;
+        result = 'no iOS Operation System';
+    } else {
+    	iOS_X = 1.0;
+		iOS_Y = 1.0;
+		iOS_Z = 1.0;
+    	result = 'You have iOS';
+    }
+    alert(result);
+
 	initCanvas();
-	init();
+    setScreen();
+    accelx = 0.0;
+    accely = 0.0;
+    accelz = 0.0;   
+
+    refresh = 75;
+    mode = 0;
 	refreshID = setInterval(draw, refresh);
     canvas.webkitRequestFullScreen();
 }
-
-/*function showInfoScreen(txt){
-            var showDiv = document.createElement('div');
-            showDiv.id = "showDiv";
-            showDiv.style.heihght = 400;
-            showDiv.style.textDecoration = "underline";
-            showDiv.style.textAlign = "center";
-            showDiv.style.paddingTop = "100px";
-            showDiv.style.background = "#F6D8CE";
-            document.body.appendChild(showDiv);
-			var btnText = document.createTextNode(txt);
-			showDiv.appendChild(btnText);
-			showDiv.addEventListener("click", function() {	
-				showDiv.parentNode.removeChild(showDiv);
-				initCanvas();
-				init();
-                //Startet Bildschirmwiederholung für Spiel
-				refreshID = setInterval(draw, refresh);
-                //canvas.webkitRequestFullScreen();                
-			}, false);
-		}*/
 
 function initCanvas(){
 	canvas = document.createElement('canvas');		
@@ -74,7 +106,6 @@ function initCanvas(){
 	if(canvas.getContext){
         ctx = canvas.getContext('2d');
     }
-    document.getElementById('test').firstChild.text = "Hallo";
 }
 
 function setScreen(){
@@ -102,24 +133,11 @@ function setScreen(){
 			}		
 		}
 
-function init(){
-			setScreen();
-
-			//Aktuell ausgelesene Beschleunigung aus dem Beschleunigungssensor
-			accelx = 0.0;
-			accely = 0.0;
-            accelz = 0.0;	
-
-			refresh = 75;
-            mode = 0;
-
-		}
-
-
 function draw(){
     setScreen();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //mode = 1;
 	switch(mode) {
         case 0:
             drawBackgroundAll();
@@ -138,17 +156,17 @@ function draw(){
 
 function drawBackgroundVertical() {
     ctx.fillStyle = 'hsla(120,100%,50%,0.2)';
-    ctx.strokeRect(RANDINDEX_X, RANDINDEX_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS);
-    ctx.fillRect(RANDINDEX_X, RANDINDEX_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS);
+    ctx.strokeRect(RANDINDEX_X + VERTICAL_OFFSET_X, RANDINDEX_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS + VERTICAL_PLUS_Y);
+    ctx.fillRect(RANDINDEX_X + VERTICAL_OFFSET_X, RANDINDEX_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS + VERTICAL_PLUS_Y);
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X, RANDINDEX_Y + KREISRADIUS - PUNKTRADIUS - 2);
-        ctx.lineTo(RANDINDEX_X + 2 * PUNKTRADIUS, RANDINDEX_Y + KREISRADIUS - PUNKTRADIUS - 2);
+        ctx.moveTo(RANDINDEX_X + VERTICAL_OFFSET_X, RANDINDEX_Y + KREISRADIUS - PUNKTRADIUS - 2 + (VERTICAL_PLUS_Y/2));
+        ctx.lineTo(RANDINDEX_X + VERTICAL_OFFSET_X + 2 * PUNKTRADIUS, RANDINDEX_Y + KREISRADIUS - PUNKTRADIUS - 2 + (VERTICAL_PLUS_Y/2));
         ctx.stroke();
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X, RANDINDEX_Y + KREISRADIUS + PUNKTRADIUS + 2);
-        ctx.lineTo(RANDINDEX_X + 2 * PUNKTRADIUS, RANDINDEX_Y + KREISRADIUS + PUNKTRADIUS + 2);
+        ctx.moveTo(RANDINDEX_X + VERTICAL_OFFSET_X, RANDINDEX_Y + KREISRADIUS + PUNKTRADIUS + 2 + (VERTICAL_PLUS_Y/2));
+        ctx.lineTo(RANDINDEX_X + VERTICAL_OFFSET_X + 2 * PUNKTRADIUS, RANDINDEX_Y + KREISRADIUS + PUNKTRADIUS + 2 + (VERTICAL_PLUS_Y/2));
         ctx.stroke();
 }
 
@@ -301,51 +319,46 @@ function drawPoints() {
 }
 
 //Ermittelt die Beschleunigung entsprechend der Bildschirmorientierung
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener("devicemotion", function (event) {
-                switch (window.orientation) {
-                    case 0:
-                        accelz = event.accelerationIncludingGravity.z * (-1);
-                        //document.getElementById('test').firstChild.text = accelz;
-                        if(-3 <= accelz && accelz <= 3) {
-                            accelx = event.accelerationIncludingGravity.x * (-1);
-                            accely = event.accelerationIncludingGravity.y;
-                            if(!(accely <= 8 && accely >= -8)) {
-                                mode = 2;
-                                break;
-                            }
-                            if(!(accelx <= 8 && accelx >= -8)) {
-                                mode = 1;
-                                break;
-                            }
-
-                        } else {
-                            mode = 0;
-                            accelx = event.accelerationIncludingGravity.x * (-1);
-                            accely = event.accelerationIncludingGravity.y;
-                        }
-                        break;
-
-                    case -90:
-                        accelx = event.accelerationIncludingGravity.y * (-1);
-                        accely = event.accelerationIncludingGravity.x * (-1);
-                        accelz = event.accelerationIncludingGravity.z * (-1);
-                        break;
-
-                    case 90:
-                        accelx = event.accelerationIncludingGravity.y;
-                        accely = event.accelerationIncludingGravity.x;
-                        accelz = event.accelerationIncludingGravity.z * (-1);
-                        break;
-
-                    case 180:
-                        accelx = event.accelerationIncludingGravity.x;
-                        accely = event.accelerationIncludingGravity.y * (-1);
-                        accelz = event.accelerationIncludingGravity.z * (-1);
-                        break;
-
-                }
-            }, true);
-        } else {
-            alert("Sorry, ihr Gerät unterstützt keine Bildschirmorientierung!");
-        }
+if (window.DeviceOrientationEvent) {
+    window.addEventListener("devicemotion", function (event) {
+    	switch (window.orientation) {
+        	case 0:
+            	accelz = event.accelerationIncludingGravity.z * (-1);
+            	//document.getElementById('test').firstChild.text = accelz;
+            	if(-3 <= accelz && accelz <= 3) {
+                	accelx = event.accelerationIncludingGravity.x * (-1);
+                	accely = event.accelerationIncludingGravity.y;
+                	if(!(accely <= 8 && accely >= -8)) {
+                    	mode = 2;
+                    	break;
+	                }
+    	            if(!(accelx <= 8 && accelx >= -8)) {
+        	            mode = 1;
+            	        break;
+                	}
+	            } else {
+    	            mode = 0;
+        	        accelx = event.accelerationIncludingGravity.x * (-1);
+            	    accely = event.accelerationIncludingGravity.y;
+	            }
+    	        break;
+        	case -90:
+            	accelx = event.accelerationIncludingGravity.y * (-1);
+	            accely = event.accelerationIncludingGravity.x * (-1);
+    	        accelz = event.accelerationIncludingGravity.z * (-1);
+        	    break;
+            case 90:
+	            accelx = event.accelerationIncludingGravity.y;
+    	        accely = event.accelerationIncludingGravity.x;
+        	    accelz = event.accelerationIncludingGravity.z * (-1);
+            	break;
+	        case 180:
+    	        accelx = event.accelerationIncludingGravity.x;
+        	    accely = event.accelerationIncludingGravity.y * (-1);
+            	accelz = event.accelerationIncludingGravity.z * (-1);
+ 	            break;
+    	}
+	}, true);
+} else {
+    alert("Sorry, ihr Gerät unterstützt keine Bildschirmorientierung!");
+}
