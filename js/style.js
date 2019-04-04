@@ -392,11 +392,11 @@ if (window.DeviceOrientationEvent) {
             	accelx = iOS_X * event.accelerationIncludingGravity.x * (-1);
                 accely = iOS_Y * event.accelerationIncludingGravity.y;
             	if(-5 <= accelz && accelz <= 5) {
-                	if(!(accely <= 8 && accely >= -8)) {
+                	if(!(accely <= 5 && accely >= -5)) {
                     	mode = 2;
                     	break;
 	                }
-    	            if(!(accelx <= 8 && accelx >= -8)) {
+    	            if(!(accelx <= 5 && accelx >= -5)) {
         	            mode = 1;
             	        break;
                 	}
@@ -409,11 +409,11 @@ if (window.DeviceOrientationEvent) {
 	            accely = iOS_Y * event.accelerationIncludingGravity.x * (-1);
     	        accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
     	        if(-5 <= accelz && accelz <= 5) {
-                	if(!(accely <= 8 && accely >= -8)) {
+                	if(!(accely <= 5 && accely >= -5)) {
                     	mode = 2;
                     	break;
 	                }
-    	            if(!(accelx <= 8 && accelx >= -8)) {
+    	            if(!(accelx <= 5 && accelx >= -5)) {
         	            mode = 1;
             	        break;
                 	}
@@ -426,11 +426,11 @@ if (window.DeviceOrientationEvent) {
     	        accely = iOS_Y * event.accelerationIncludingGravity.x;
         	    accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
         	    if(-5 <= accelz && accelz <= 5) {
-                	if(!(accely <= 8 && accely >= -8)) {
+                	if(!(accely <= 5 && accely >= -5)) {
                     	mode = 2;
                     	break;
 	                }
-    	            if(!(accelx <= 8 && accelx >= -8)) {
+    	            if(!(accelx <= 5 && accelx >= -5)) {
         	            mode = 1;
             	        break;
                 	}
@@ -443,11 +443,11 @@ if (window.DeviceOrientationEvent) {
         	    accely = iOS_Y * event.accelerationIncludingGravity.y * (-1);
             	accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
             	if(-5 <= accelz && accelz <= 5) {
-                	if(!(accely <= 8 && accely >= -8)) {
+                	if(!(accely <= 5 && accely >= -5)) {
                     	mode = 2;
                     	break;
 	                }
-    	            if(!(accelx <= 8 && accelx >= -8)) {
+    	            if(!(accelx <= 5 && accelx >= -5)) {
         	            mode = 1;
             	        break;
                 	}
