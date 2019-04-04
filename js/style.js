@@ -285,9 +285,9 @@ function setPointsPosition() {
 				points[0].y = INIT_Y_1 + KREISRADIUS * accely;
     			points[0].x = INIT_X_1 + KREISRADIUS * accelx;
 
-    			points[1].x = INIT_X_2 + KREISRADIUS * accelx;
+    			points[1].y = INIT_Y_2 + KREISRADIUS * accely;
 
-    			points[2].y = INIT_Y_3 + KREISRADIUS * accely;
+    			points[2].x = INIT_X_3 + KREISRADIUS * accelx;
 				break;
 			case 1:
 				points[1].x = INIT_X_2 + 4.5 * PUNKTRADIUS * accelx;
