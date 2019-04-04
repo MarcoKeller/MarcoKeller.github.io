@@ -156,7 +156,7 @@ function draw(){
             break;
     }
     setPointsPosition();
-    checkCollision();
+    //checkCollision();
     drawPoints();    
 }
 
@@ -281,20 +281,20 @@ function drawBackgroundAll() {
 
 function setPointsPosition() {
 	switch(mode) {
-			case 0:
-				points[0].y = INIT_Y_1 + KREISRADIUS * accely;
-    			points[0].x = INIT_X_1 + KREISRADIUS * accelx;
+		case 0:
+			points[0].y = INIT_Y_1 + KREISRADIUS * accely;
+    		points[0].x = INIT_X_1 + KREISRADIUS * accelx;
 
-    			points[1].y = INIT_Y_2 + KREISRADIUS * accely;
+   			points[1].y = INIT_Y_2 + KREISRADIUS * accely;
 
-    			points[2].x = INIT_X_3 + KREISRADIUS * accelx;
-				break;
-			case 1:
-				points[1].x = INIT_X_2 + 4.5 * PUNKTRADIUS * accelx;
-				break;
-			case 2:
-				points[2].y = INIT_Y_3 + 7 * PUNKTRADIUS * accely;
-				break;
+   			points[2].x = INIT_X_3 + KREISRADIUS * accelx;
+			break;
+		case 1:
+			points[1].x = INIT_X_2 + 4.5 * PUNKTRADIUS * accelx;
+			break;
+		case 2:
+			points[2].y = INIT_Y_3 + 7 * PUNKTRADIUS * accely;
+			break;
 	}
 }
 
