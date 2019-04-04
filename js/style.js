@@ -2,20 +2,17 @@ var canvas;
 var ctx;
 var ratio;
 
-// Index am rand
-const RANDINDEX_Y = 40;
-const RANDINDEX_X = 220;
-const DIFF_KREIS_RECHTECK = 20;
-
 //Radius
-var PUNKTRADIUS = 20;
-var KREISRADIUS = 6.5 * PUNKTRADIUS;
+var PUNKTRADIUS;
+var KREISRADIUS;
 
-const VERTICAL_OFFSET_X = 150; 
-const VERTICAL_PLUS_Y = 60;
+// Index am Rand (wird für jeden Mode angepasst)
+var OFFSET_X;
+var OFFSET_Y;
+const DIFF_KREIS_RECHTECK = 10;
 
 //Zeitintervall für Bildschirmwiederholung
-var refresh = 10;
+var refresh;
 //ID von setIntervall;
 var refreshID;
 
@@ -30,20 +27,19 @@ var iOS_Y = 1.0;
 var iOS_Z = 1.0;
 
 //InitialPosition der drei Punkte im mode 0
-var INIT_X_1 = RANDINDEX_X + PUNKTRADIUS;
-var INIT_Y_1 = RANDINDEX_Y + KREISRADIUS;
-var INIT_X_2 = RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
-var INIT_Y_2 = RANDINDEX_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS;
-var INIT_X_3 = RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
-var INIT_Y_3 = RANDINDEX_Y + KREISRADIUS;
+var INIT_X_1;
+var INIT_Y_1;
+var INIT_X_2;
+var INIT_Y_2;
+var INIT_X_3;
+var INIT_Y_3;
 
 var points = [];
-points[0] = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
-points[1] = { x: INIT_X_2, y: INIT_Y_2, radius: PUNKTRADIUS };
-points[2] = { x: INIT_X_3, y: INIT_Y_3, radius: PUNKTRADIUS };
+
 // Anzeigemodus (0 = Alles, 1 = Vertical, 2 = Horizontal)
 var mode = 0;
 
+//Prüfen, welcher UserAgent verwendet wird
 var isMobile = {
     Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -66,23 +62,20 @@ var isMobile = {
 }; 
 
 function startWasserwaage() {
-	var result = 'No mobile device';
-    if (isMobile.any()) {
-        result = 'Your on a mobile device';
-    }
-    alert(result);
+   /* if (!isMobile.any()) {
+        var result = 'Die Wasserwaage funktioniert nur auf mobilen Geräten!';
+        alert(result);
+        return;
+    } */
     if (!isMobile.iOS()) {
     	iOS_X = -1.0;
 		iOS_Y = -1.0;
 		iOS_Z = -1.0;
-        result = 'no iOS Operation System';
     } else {
     	iOS_X = 1.0;
 		iOS_Y = 1.0;
 		iOS_Z = 1.0;
-    	result = 'You have iOS';
     }
-    alert(result);
 
 	initCanvas();
     setScreen();
@@ -137,15 +130,28 @@ function draw(){
     setScreen();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //mode = 1;
+    mode = 0;
 	switch(mode) {
         case 0:
+        	PUNKTRADIUS = 25;
+			KREISRADIUS = 6.5 * PUNKTRADIUS;
+			OFFSET_X = 220; 
+			OFFSET_Y = 10;
+			setInitValueOfPoints();
             drawBackgroundAll();
             break;
         case 1:
+        	PUNKTRADIUS = 40;
+        	OFFSET_X = 370; 
+			OFFSET_Y = 20;
+			setInitValueOfPoints();
             drawBackgroundVertical();
             break;
         case 2:
+        	PUNKTRADIUS = 50;
+        	OFFSET_X = 50; 
+			OFFSET_Y = 140;
+        	setInitValueOfPoints();
             drawBackgroundHorizontal();
             break;
     }
@@ -154,125 +160,173 @@ function draw(){
     drawPoints();    
 }
 
+function setInitValueOfPoints() {
+	if(mode == 0) {
+		//Kreis
+		INIT_X_1 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
+		INIT_Y_1 = OFFSET_Y + KREISRADIUS;
+	}
+	if((mode == 0) || (mode == 1)) {
+		//Vertikal
+		switch(mode) {
+			case 0:
+				INIT_X_2 = OFFSET_X + PUNKTRADIUS;
+				INIT_Y_2 = OFFSET_Y + KREISRADIUS;
+				break;
+			case 1:
+				INIT_X_2 = OFFSET_X + PUNKTRADIUS;
+				INIT_Y_2 = OFFSET_Y + 4.5 * PUNKTRADIUS;
+				break;
+		}
+	} 
+	if((mode == 0) || (mode == 2)) {
+		//Horizontal
+		switch(mode) {
+			case 0:
+				INIT_X_3 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
+				INIT_Y_3 = OFFSET_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS;
+				break;
+			case 2:
+				INIT_X_3 = OFFSET_X + 7 * PUNKTRADIUS;
+				INIT_Y_3 = OFFSET_Y + PUNKTRADIUS;
+				break;
+		}
+	}
+	points[0] = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
+	points[1] = { x: INIT_X_2, y: INIT_Y_2, radius: PUNKTRADIUS };
+	points[2] = { x: INIT_X_3, y: INIT_Y_3, radius: PUNKTRADIUS };
+}
+
 function drawBackgroundVertical() {
     ctx.fillStyle = 'hsla(120,100%,50%,0.2)';
-    ctx.strokeRect(RANDINDEX_X + VERTICAL_OFFSET_X, RANDINDEX_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS + VERTICAL_PLUS_Y);
-    ctx.fillRect(RANDINDEX_X + VERTICAL_OFFSET_X, RANDINDEX_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS + VERTICAL_PLUS_Y);
+    ctx.strokeRect(OFFSET_X, OFFSET_Y, 2 * PUNKTRADIUS, 9 * PUNKTRADIUS);
+    ctx.fillRect(OFFSET_X, OFFSET_Y, 2 * PUNKTRADIUS,  9 * PUNKTRADIUS);
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X + VERTICAL_OFFSET_X, RANDINDEX_Y + KREISRADIUS - PUNKTRADIUS - 2 + (VERTICAL_PLUS_Y/2));
-        ctx.lineTo(RANDINDEX_X + VERTICAL_OFFSET_X + 2 * PUNKTRADIUS, RANDINDEX_Y + KREISRADIUS - PUNKTRADIUS - 2 + (VERTICAL_PLUS_Y/2));
+        ctx.moveTo(OFFSET_X, OFFSET_Y + 3.5 * PUNKTRADIUS - 2);
+        ctx.lineTo(OFFSET_X + 2 * PUNKTRADIUS, OFFSET_Y + 3.5 * PUNKTRADIUS - 2);
         ctx.stroke();
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X + VERTICAL_OFFSET_X, RANDINDEX_Y + KREISRADIUS + PUNKTRADIUS + 2 + (VERTICAL_PLUS_Y/2));
-        ctx.lineTo(RANDINDEX_X + VERTICAL_OFFSET_X + 2 * PUNKTRADIUS, RANDINDEX_Y + KREISRADIUS + PUNKTRADIUS + 2 + (VERTICAL_PLUS_Y/2));
+        ctx.moveTo(OFFSET_X, OFFSET_Y + 5.5 * PUNKTRADIUS + 2);
+        ctx.lineTo(OFFSET_X + 2 * PUNKTRADIUS, OFFSET_Y + 5.5 * PUNKTRADIUS + 2);
         ctx.stroke();
 }
 
 function drawBackgroundHorizontal() {
-    ctx.fillStyle = 'hsla(120,100%,50%,0.2)';
-
-    ctx.strokeRect(RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK ,RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK,
-                 2 * KREISRADIUS, 2 * PUNKTRADIUS);
-    ctx.fillRect(RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK ,RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK,
-                 2 * KREISRADIUS, 2 * PUNKTRADIUS);
+	ctx.fillStyle = 'hsla(120,100%,50%,0.2)';
+    ctx.strokeRect(OFFSET_X ,OFFSET_Y, 14 * PUNKTRADIUS, 2 * PUNKTRADIUS);
+    ctx.fillRect(OFFSET_X ,OFFSET_Y, 14 * PUNKTRADIUS, 2 * PUNKTRADIUS);
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X + PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK - 2, RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK);
-        ctx.lineTo(RANDINDEX_X + PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK - 2, 
-                    RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS);
+        ctx.moveTo(OFFSET_X + 6 * PUNKTRADIUS - 2, OFFSET_Y);
+        ctx.lineTo(OFFSET_X + 6 * PUNKTRADIUS - 2, OFFSET_Y + 2 * PUNKTRADIUS);
         ctx.stroke();
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X + 3 * PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK + 2, RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK);
-        ctx.lineTo(RANDINDEX_X + 3 * PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK + 2, 
-                    RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS);
+        ctx.moveTo(OFFSET_X + 8 * PUNKTRADIUS + 2, OFFSET_Y);
+        ctx.lineTo(OFFSET_X + 8 * PUNKTRADIUS + 2, OFFSET_Y + 2 * PUNKTRADIUS);
         ctx.stroke();
 }
 
 function drawBackgroundAll() {
 	// Kreis
 	ctx.beginPath();
-        ctx.arc(RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS,
-         		RANDINDEX_Y + KREISRADIUS, KREISRADIUS, 0, Math.PI * 2);
+        ctx.arc(OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS,
+         		OFFSET_Y + KREISRADIUS, KREISRADIUS, 0, Math.PI * 2);
         ctx.fillStyle = "hsla(120,100%,50%,0.2)";
         ctx.fill();
         ctx.stroke();
         ctx.closePath();
     ctx.beginPath();
-        ctx.arc(RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS,
-        		 RANDINDEX_Y + KREISRADIUS, PUNKTRADIUS + 2, 0, Math.PI * 2);
-        //ctx.fillStyle = "#f4f4f4";
-        //ctx.fill();
+        ctx.arc(OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS,
+        		 OFFSET_Y + KREISRADIUS, PUNKTRADIUS + 2, 0, Math.PI * 2);
         ctx.stroke();
         ctx.closePath();
 
     // vertikales Rechteck
     ctx.fillStyle = 'hsla(120,100%,50%,0.2)';
-    ctx.strokeRect(RANDINDEX_X, RANDINDEX_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS);
-    ctx.fillRect(RANDINDEX_X, RANDINDEX_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS);
+    ctx.strokeRect(OFFSET_X, OFFSET_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS);
+    ctx.fillRect(OFFSET_X, OFFSET_Y, 2 * PUNKTRADIUS, 2 * KREISRADIUS);
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X, RANDINDEX_Y + KREISRADIUS - PUNKTRADIUS - 2);
-        ctx.lineTo(RANDINDEX_X + 2 * PUNKTRADIUS, RANDINDEX_Y + KREISRADIUS - PUNKTRADIUS - 2);
+        ctx.moveTo(OFFSET_X, OFFSET_Y + KREISRADIUS - PUNKTRADIUS - 2);
+        ctx.lineTo(OFFSET_X + 2 * PUNKTRADIUS, OFFSET_Y + KREISRADIUS - PUNKTRADIUS - 2);
         ctx.stroke();
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X, RANDINDEX_Y + KREISRADIUS + PUNKTRADIUS + 2);
-        ctx.lineTo(RANDINDEX_X + 2 * PUNKTRADIUS, RANDINDEX_Y + KREISRADIUS + PUNKTRADIUS + 2);
+        ctx.moveTo(OFFSET_X, OFFSET_Y + KREISRADIUS + PUNKTRADIUS + 2);
+        ctx.lineTo(OFFSET_X + 2 * PUNKTRADIUS, OFFSET_Y + KREISRADIUS + PUNKTRADIUS + 2);
         ctx.stroke();
 
     //Horizontales Rechteck
     ctx.fillStyle = 'hsla(120,100%,50%,0.2)';
-
-    ctx.strokeRect(RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK ,RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK,
+    ctx.strokeRect(OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK ,OFFSET_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK,
     			 2 * KREISRADIUS, 2 * PUNKTRADIUS);
-    ctx.fillRect(RANDINDEX_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK ,RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK,
+    ctx.fillRect(OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK ,OFFSET_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK,
                  2 * KREISRADIUS, 2 * PUNKTRADIUS);
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X + PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK - 2, RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK);
-        ctx.lineTo(RANDINDEX_X + PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK - 2, 
-        			RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS);
+        ctx.moveTo(OFFSET_X + PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK - 2, OFFSET_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK);
+        ctx.lineTo(OFFSET_X + PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK - 2, 
+        			OFFSET_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS);
         ctx.stroke();
     ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.moveTo(RANDINDEX_X + 3 * PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK + 2, RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK);
-        ctx.lineTo(RANDINDEX_X + 3 * PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK + 2, 
-        			RANDINDEX_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS);
+        ctx.moveTo(OFFSET_X + 3 * PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK + 2, OFFSET_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK);
+        ctx.lineTo(OFFSET_X + 3 * PUNKTRADIUS + KREISRADIUS + DIFF_KREIS_RECHTECK + 2, 
+        			OFFSET_Y + 2 * KREISRADIUS + DIFF_KREIS_RECHTECK + 2 * PUNKTRADIUS);
         ctx.stroke();
 }
 
 function setPointsPosition() {
-    points[0].y = INIT_Y_1 + (KREISRADIUS - PUNKTRADIUS) * accely;
+	switch(mode) {
+			case 0:
+				points[0].y = INIT_Y_1 + KREISRADIUS * accely;
+    			points[0].x = INIT_X_1 + KREISRADIUS * accelx;
 
-    points[1].x = INIT_X_2 + (KREISRADIUS - PUNKTRADIUS) * accelx;
+    			points[1].x = INIT_X_2 + KREISRADIUS * accelx;
 
-    points[2].y = INIT_Y_3 + (KREISRADIUS - PUNKTRADIUS) * accely;
-    points[2].x = INIT_X_3 + (KREISRADIUS - PUNKTRADIUS) * accelx;
+    			points[2].y = INIT_Y_3 + KREISRADIUS * accely;
+				break;
+			case 1:
+				points[1].x = INIT_X_2 + 4.5 * PUNKTRADIUS * accelx;
+				break;
+			case 2:
+				points[2].y = INIT_Y_3 + 7 * PUNKTRADIUS * accely;
+				break;
+	}
 }
 
 function checkCollision() {
-    if(points[0].y <= RANDINDEX_Y + PUNKTRADIUS) {
-        points[0].y = RANDINDEX_Y + PUNKTRADIUS;
-    }
-    if(points[0].y >= RANDINDEX_Y + 2 * KREISRADIUS - PUNKTRADIUS) {
-        points[0].y = RANDINDEX_Y + 2 * KREISRADIUS - PUNKTRADIUS;
-    }
-    if(points[1].x <= RANDINDEX_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK) {
-        points[1].x = RANDINDEX_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK;
-    }
-    if(points[1].x >= RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS) {
-        points[1].x = RANDINDEX_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
-    }
+	switch(mode) {
+			case 0:
+				if(points[1].y <= OFFSET_Y + PUNKTRADIUS) {
+        			points[1].y = OFFSET_Y + PUNKTRADIUS;
+    			}
+    			if(points[1].y >= OFFSET_Y + 2 * KREISRADIUS - PUNKTRADIUS) {
+        			points[1].y = OFFSET_Y + 2 * KREISRADIUS - PUNKTRADIUS;
+    			}
+    			if(points[2].x <= OFFSET_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK) {
+        			points[2].x = OFFSET_X + 3 * PUNKTRADIUS + DIFF_KREIS_RECHTECK;
+    			}
+    			if(points[2].x >= OFFSET_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS) {
+        			points[2].x = OFFSET_X + PUNKTRADIUS + DIFF_KREIS_RECHTECK + 2 * KREISRADIUS;
+    			}
 
-    if(getDistanceBetweenPositions(INIT_X_3, INIT_Y_3, points[2].x, points[2].y) > (KREISRADIUS - PUNKTRADIUS)) {
-        var tempx = getCircleValueX(INIT_X_3, (points[2].y - INIT_Y_3), (points[2].x - INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
-        var tempy = getCircleValueY(INIT_Y_3, (points[2].y - INIT_Y_3), (points[2].x - INIT_X_3), (KREISRADIUS - PUNKTRADIUS));
-        points[2].x = tempx;
-        points[2].y = tempy;
-    }
+    			if(getDistanceBetweenPositions(INIT_X_1, INIT_Y_1, points[0].x, points[0].y) > (KREISRADIUS - PUNKTRADIUS)) {
+        			var tempx = getCircleValueX(INIT_X_1, (points[0].y - INIT_Y_1), (points[0].x - INIT_X_1), (KREISRADIUS - PUNKTRADIUS));
+        			var tempy = getCircleValueY(INIT_Y_1, (points[0].y - INIT_Y_1), (points[0].x - INIT_X_1), (KREISRADIUS - PUNKTRADIUS));
+        			points[0].x = tempx;
+        			points[0].y = tempy;
+    			}
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+	}
+    
 
 }
 
@@ -304,11 +358,11 @@ function getDistanceBetweenPositions(StartX, StartY, EndX, EndY) {
 function drawPoints() {
 		var min = 0;
         var max = 3;
-        switch(mode) {
+       /* switch(mode) {
             case 0: break;
             case 1: max = 1; break;
             case 2: min = 1; max = 2; break;
-        }
+        } */
         for(var i = min; i < max; i++) {
             ctx.beginPath();
             ctx.arc(points[i].x, points[i].y, PUNKTRADIUS, 0, Math.PI * 2);
@@ -323,11 +377,10 @@ if (window.DeviceOrientationEvent) {
     window.addEventListener("devicemotion", function (event) {
     	switch (window.orientation) {
         	case 0:
-            	accelz = event.accelerationIncludingGravity.z * (-1);
-            	//document.getElementById('test').firstChild.text = accelz;
-            	if(-3 <= accelz && accelz <= 3) {
-                	accelx = event.accelerationIncludingGravity.x * (-1);
-                	accely = event.accelerationIncludingGravity.y;
+            	accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
+            	accelx = iOS_X * event.accelerationIncludingGravity.x * (-1);
+                accely = iOS_Y * event.accelerationIncludingGravity.y;
+            	if(-5 <= accelz && accelz <= 5) {
                 	if(!(accely <= 8 && accely >= -8)) {
                     	mode = 2;
                     	break;
@@ -338,24 +391,58 @@ if (window.DeviceOrientationEvent) {
                 	}
 	            } else {
     	            mode = 0;
-        	        accelx = event.accelerationIncludingGravity.x * (-1);
-            	    accely = event.accelerationIncludingGravity.y;
 	            }
     	        break;
         	case -90:
-            	accelx = event.accelerationIncludingGravity.y * (-1);
-	            accely = event.accelerationIncludingGravity.x * (-1);
-    	        accelz = event.accelerationIncludingGravity.z * (-1);
+            	accelx = iOS_X * event.accelerationIncludingGravity.y * (-1);
+	            accely = iOS_Y * event.accelerationIncludingGravity.x * (-1);
+    	        accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
+    	        if(-5 <= accelz && accelz <= 5) {
+                	if(!(accely <= 8 && accely >= -8)) {
+                    	mode = 1;
+                    	break;
+	                }
+    	            if(!(accelx <= 8 && accelx >= -8)) {
+        	            mode = 2;
+            	        break;
+                	}
+	            } else {
+    	            mode = 0;
+	            }
         	    break;
             case 90:
-	            accelx = event.accelerationIncludingGravity.y;
-    	        accely = event.accelerationIncludingGravity.x;
-        	    accelz = event.accelerationIncludingGravity.z * (-1);
+	            accelx = iOS_X * event.accelerationIncludingGravity.y;
+    	        accely = iOS_Y * event.accelerationIncludingGravity.x;
+        	    accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
+        	    if(-5 <= accelz && accelz <= 5) {
+                	if(!(accely <= 8 && accely >= -8)) {
+                    	mode = 1;
+                    	break;
+	                }
+    	            if(!(accelx <= 8 && accelx >= -8)) {
+        	            mode = 2;
+            	        break;
+                	}
+	            } else {
+    	            mode = 0;
+	            }
             	break;
 	        case 180:
-    	        accelx = event.accelerationIncludingGravity.x;
-        	    accely = event.accelerationIncludingGravity.y * (-1);
-            	accelz = event.accelerationIncludingGravity.z * (-1);
+    	        accelx = iOS_X * event.accelerationIncludingGravity.x;
+        	    accely = iOS_Y * event.accelerationIncludingGravity.y * (-1);
+            	accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
+            	if(-5 <= accelz && accelz <= 5) {
+                	if(!(accely <= 8 && accely >= -8)) {
+                    	mode = 2;
+                    	break;
+	                }
+    	            if(!(accelx <= 8 && accelx >= -8)) {
+        	            mode = 1;
+            	        break;
+                	}
+	            } else {
+    	            mode = 0;
+	            }
  	            break;
     	}
 	}, true);
