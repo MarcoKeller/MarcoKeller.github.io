@@ -290,18 +290,17 @@ function drawBackgroundAll() {
 function setPointsPosition() {
 	switch(mode) {
 		case 0:
-			points[0].y = INIT_Y_1 + KREISRADIUS * accely;
-    		points[0].x = INIT_X_1 + KREISRADIUS * accelx;
+			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * accely;
+    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * accelx;
 
-   			points[1].y = INIT_Y_2 + KREISRADIUS * accely;
+   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * accely;
 
-   			points[2].x = INIT_X_3 + KREISRADIUS * accelx;
+   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * accelx;
 			break;
 		case 1:
-			points[1].y = INIT_Y_2 + 4.5 * PUNKTRADIUS * accely;
+			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * accely;
 			break;
 		case 2:
-			//points[2].x = INIT_X_3 + 7 * PUNKTRADIUS * accelx;
 			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * accelx;
 			break;
 	}
@@ -393,6 +392,7 @@ function drawPoints() {
 
 function getXAngle() {
 	var dif = INIT_X_3 - points[2].x;
+	var angle = (90 / 1480) * dif;
 	return dif.toFixed(1);
 }
 
