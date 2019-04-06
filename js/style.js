@@ -160,10 +160,12 @@ function draw(){
             drawBackgroundHorizontal();
             break;
     }
+
     setPointsPosition();
+    drawAngle();
     checkCollision();
     drawPoints();    
-    drawAngle();
+    
 }
 
 function setInitValueOfPoints() {
@@ -389,7 +391,7 @@ function drawPoints() {
 }
 
 function getXAngle() {
-	var dif = (accelx / 10) * 90;
+	var dif = INIT_X_3 - points[2].x;
 	return dif.toFixed(1);
 }
 
