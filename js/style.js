@@ -301,7 +301,8 @@ function setPointsPosition() {
 			points[1].y = INIT_Y_2 + 4.5 * PUNKTRADIUS * accely;
 			break;
 		case 2:
-			points[2].x = INIT_X_3 + 7 * PUNKTRADIUS * accelx;
+			//points[2].x = INIT_X_3 + 7 * PUNKTRADIUS * accelx;
+			points[2].x = INIT_X_3 + PUNKTRADIUS * accelx;
 			break;
 	}
 }
