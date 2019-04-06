@@ -390,20 +390,19 @@ function drawPoints() {
 
 function getXAngle() {
 	var dif = (accelx / 10) * 90;
-
-	return dif;
+	return dif.toFixed(1);
 }
 
 function getYAngle() {
 	var dif = (accely / 10) * 90;
-	return dif;
+	return dif.toFixed(1);
 }
 
 function drawAngle() {
 	if(mode == 0 || mode == 2) {
 		ctx.font = "28px Calibri";
     	ctx.fillStyle = "#8B2323";
-    	ctx.fillText("Winkel in x: " + getXAngle() + "°", 127, 32);
+    	ctx.fillText("Winkel in x: " + getXAngle() + "°", 17, 132);
 	}
 	if(mode == 0 || mode == 1) {
 		ctx.font = "28px Calibri";
