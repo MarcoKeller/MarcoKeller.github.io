@@ -389,22 +389,23 @@ function drawPoints() {
 }
 
 function getXAngle() {
-	var dif = INIT_X_3 - points[2].x;
+	var dif = (accelx / 10) * 90;
+
 	return dif;
 }
 
 function getYAngle() {
-	var dif = INIT_Y_2 - points[1].y;
+	var dif = (accely / 10) * 90;
 	return dif;
 }
 
 function drawAngle() {
-	if(mode == 0 || mode == 1) {
+	if(mode == 0 || mode == 2) {
 		ctx.font = "28px Calibri";
     	ctx.fillStyle = "#8B2323";
-    	ctx.fillText("Winkel in x: " + getXAngle() + "°", 27, 32);
+    	ctx.fillText("Winkel in x: " + getXAngle() + "°", 127, 32);
 	}
-	if(mode == 0 || mode == 2) {
+	if(mode == 0 || mode == 1) {
 		ctx.font = "28px Calibri";
     	ctx.fillStyle = "#8B2323";
     	ctx.fillText("Winkel in y: " + getYAngle() + "°", 17, 22);
@@ -419,69 +420,21 @@ if (window.DeviceOrientationEvent) {
             	accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
             	accelx = iOS_X * event.accelerationIncludingGravity.x * (-1);
                 accely = iOS_Y * event.accelerationIncludingGravity.y;
-            /*	if(-5 <= accelz && accelz <= 5) {
-                	if(!(accely <= 5 && accely >= -5)) {
-                    	mode = 2;
-                    	break;
-	                }
-    	            if(!(accelx <= 5 && accelx >= -5)) {
-        	            mode = 1;
-            	        break;
-                	}
-	            } else {
-    	            mode = 0;
-	            } */
     	        break;
         	case -90:
             	accelx = iOS_X * event.accelerationIncludingGravity.y * (-1);
 	            accely = iOS_Y * event.accelerationIncludingGravity.x * (-1);
     	        accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
-    	    /*    if(-5 <= accelz && accelz <= 5) {
-                	if(!(accely <= 5 && accely >= -5)) {
-                    	mode = 2;
-                    	break;
-	                }
-    	            if(!(accelx <= 5 && accelx >= -5)) {
-        	            mode = 1;
-            	        break;
-                	}
-	            } else {
-    	            mode = 0;
-	            } */
         	    break;
             case 90:
 	            accelx = iOS_X * event.accelerationIncludingGravity.y;
     	        accely = iOS_Y * event.accelerationIncludingGravity.x;
         	    accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
-        	/*    if(-5 <= accelz && accelz <= 5) {
-                	if(!(accely <= 5 && accely >= -5)) {
-                    	mode = 2;
-                    	break;
-	                }
-    	            if(!(accelx <= 5 && accelx >= -5)) {
-        	            mode = 1;
-            	        break;
-                	}
-	            } else {
-    	            mode = 0;
-	            } */
             	break;
 	        case 180:
     	        accelx = iOS_X * event.accelerationIncludingGravity.x;
         	    accely = iOS_Y * event.accelerationIncludingGravity.y * (-1);
             	accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
-          /*  	if(-5 <= accelz && accelz <= 5) {
-                	if(!(accely <= 5 && accely >= -5)) {
-                    	mode = 2;
-                    	break;
-	                }
-    	            if(!(accelx <= 5 && accelx >= -5)) {
-        	            mode = 1;
-            	        break;
-                	}
-	            } else {
-    	            mode = 0;
-	            } */
  	            break;
     	}
     	if(-5 <= accelz && accelz <= 5) {
