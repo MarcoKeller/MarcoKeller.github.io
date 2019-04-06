@@ -134,7 +134,7 @@ function draw(){
     setScreen();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //mode = 1;
+    mode = 2;
 	
 	switch(mode) {
         case 0:
@@ -402,12 +402,12 @@ function drawAngle() {
 	if(mode == 0 || mode == 2) {
 		ctx.font = "28px Calibri";
     	ctx.fillStyle = "#8B2323";
-    	ctx.fillText("Winkel in x: " + getXAngle() + "°", 17, 132);
+    	ctx.fillText("Winkel in x: " + getXAngle() + "°", 10, 132);
 	}
 	if(mode == 0 || mode == 1) {
 		ctx.font = "28px Calibri";
     	ctx.fillStyle = "#8B2323";
-    	ctx.fillText("Winkel in y: " + getYAngle() + "°", 17, 22);
+    	ctx.fillText("Winkel in y: " + getYAngle() + "°", 10, 22);
 	}
 }
 
