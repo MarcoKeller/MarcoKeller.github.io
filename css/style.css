@@ -60,12 +60,15 @@ header nav{
   margin-top:10px;
 }
 
-header .current a{
-  color:#F10A0A;
+.button {
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-size:16px;
   font-weight:bold;
+  padding: 3px 20px 3px 20px;
 }
 
-header a:hover{
+.button:hover{
   color:#cccccc;
   font-weight:bold;
 }

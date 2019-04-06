@@ -6,7 +6,6 @@
     	<title>Mobile Computing Wasserwaage</title>
     	<link rel="stylesheet" href="./css/style.css">
 		<script type="text/javascript" src="./js/style.js"></script>
-		<script src="https://code.jquery.com/jquery3.2.1.min.js"></script>
 	</head>
 	<body onorientationchange="setScreen();">
 		<header>
@@ -17,11 +16,7 @@
 				<nav>
 					<ul>
 						<li>Wasserwaage</li>
-						<!--<li><a href="angel.html">Winkelmesser</a></li>-->
-						<li><button id="start" class="button_1" onclick="startWasserwaage();">Starten</button></li>
-						<script>$("#start").click(function() {
-							$(this).attr("disabled", true);
-						})</script>
+						<li><button id="start" class="button" onclick="startWasserwaage();">Starten</button></li>
 					</ul>
 				</nav>
 			</div>

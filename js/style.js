@@ -62,11 +62,13 @@ var isMobile = {
 }; 
 
 function startWasserwaage() {
+	//Prüfe, ob die Seite von einem mobilen Gerät aufgerufen wurde
     if (!isMobile.any()) {
         var result = 'Die Wasserwaage funktioniert nur auf mobilen Geräten!';
         alert(result);
         return;
     } 
+    //Prüfen, ob Gerät ein iOS Gerät ist
     if (!isMobile.iOS()) {
     	iOS_X = -1.0;
 		iOS_Y = -1.0;
@@ -77,16 +79,19 @@ function startWasserwaage() {
 		iOS_Z = 1.0;
     }
 
+    // initialisieren von Canvas
 	initCanvas();
     setScreen();
     accelx = 0.0;
     accely = 0.0;
     accelz = 0.0;   
 
+    // Aktuallisierungsintervall starten
     refresh = 75;
     mode = 0;
 	refreshID = setInterval(draw, refresh);
     canvas.webkitRequestFullScreen();
+    document.getElementById("start").disabled = "disabled";
 }
 
 function initCanvas(){
@@ -103,11 +108,10 @@ function initCanvas(){
 
 function setScreen(){
             var width = canvas.width;
-            var height = canvas.height;        
-            //canvas.webkitRequestFullScreen();                
+            var height = canvas.height;                       
 			ratio = width / height;
-            //Höhe und Breite passend zum Seitenverhältnis
 
+            //Höhe und Breite passend zum Seitenverhältnis
             var heightval;
             var widthval;
 			//innerWidth/innerHeight < 4:3
@@ -159,6 +163,7 @@ function draw(){
     setPointsPosition();
     checkCollision();
     drawPoints();    
+    drawAngle();
 }
 
 function setInitValueOfPoints() {
@@ -383,6 +388,29 @@ function drawPoints() {
         }
 }
 
+function getXAngle() {
+	var dif = INIT_X_3 - points[2].x;
+	return dif;
+}
+
+function getYAngle() {
+	var dif = INIT_Y_2 - points[1].y;
+	return dif;
+}
+
+function drawAngle() {
+	if(mode == 0 || mode == 1) {
+		ctx.font = "28px Calibri";
+    	ctx.fillStyle = "#8B2323";
+    	ctx.fillText("Winkel in x: " + getXAngle() + "°", 27, 32);
+	}
+	if(mode == 0 || mode == 2) {
+		ctx.font = "28px Calibri";
+    	ctx.fillStyle = "#8B2323";
+    	ctx.fillText("Winkel in y: " + getYAngle() + "°", 17, 22);
+	}
+}
+
 //Ermittelt die Beschleunigung entsprechend der Bildschirmorientierung
 if (window.DeviceOrientationEvent) {
     window.addEventListener("devicemotion", function (event) {
@@ -391,7 +419,7 @@ if (window.DeviceOrientationEvent) {
             	accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
             	accelx = iOS_X * event.accelerationIncludingGravity.x * (-1);
                 accely = iOS_Y * event.accelerationIncludingGravity.y;
-            	if(-5 <= accelz && accelz <= 5) {
+            /*	if(-5 <= accelz && accelz <= 5) {
                 	if(!(accely <= 5 && accely >= -5)) {
                     	mode = 2;
                     	break;
@@ -402,13 +430,13 @@ if (window.DeviceOrientationEvent) {
                 	}
 	            } else {
     	            mode = 0;
-	            }
+	            } */
     	        break;
         	case -90:
             	accelx = iOS_X * event.accelerationIncludingGravity.y * (-1);
 	            accely = iOS_Y * event.accelerationIncludingGravity.x * (-1);
     	        accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
-    	        if(-5 <= accelz && accelz <= 5) {
+    	    /*    if(-5 <= accelz && accelz <= 5) {
                 	if(!(accely <= 5 && accely >= -5)) {
                     	mode = 2;
                     	break;
@@ -419,13 +447,13 @@ if (window.DeviceOrientationEvent) {
                 	}
 	            } else {
     	            mode = 0;
-	            }
+	            } */
         	    break;
             case 90:
 	            accelx = iOS_X * event.accelerationIncludingGravity.y;
     	        accely = iOS_Y * event.accelerationIncludingGravity.x;
         	    accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
-        	    if(-5 <= accelz && accelz <= 5) {
+        	/*    if(-5 <= accelz && accelz <= 5) {
                 	if(!(accely <= 5 && accely >= -5)) {
                     	mode = 2;
                     	break;
@@ -436,13 +464,13 @@ if (window.DeviceOrientationEvent) {
                 	}
 	            } else {
     	            mode = 0;
-	            }
+	            } */
             	break;
 	        case 180:
     	        accelx = iOS_X * event.accelerationIncludingGravity.x;
         	    accely = iOS_Y * event.accelerationIncludingGravity.y * (-1);
             	accelz = iOS_Z * event.accelerationIncludingGravity.z * (-1);
-            	if(-5 <= accelz && accelz <= 5) {
+          /*  	if(-5 <= accelz && accelz <= 5) {
                 	if(!(accely <= 5 && accely >= -5)) {
                     	mode = 2;
                     	break;
@@ -453,9 +481,20 @@ if (window.DeviceOrientationEvent) {
                 	}
 	            } else {
     	            mode = 0;
-	            }
+	            } */
  	            break;
     	}
+    	if(-5 <= accelz && accelz <= 5) {
+            if(!(accely <= 5 && accely >= -5)) {
+            	mode = 2;
+	        } else {
+	        	if(!(accelx <= 5 && accelx >= -5)) {
+        	    mode = 1;
+            	}
+	        } 
+	    } else {
+    	    mode = 0;
+	    }
 	}, true);
 } else {
     alert("Sorry, ihr Gerät unterstützt keine Bildschirmorientierung!");
