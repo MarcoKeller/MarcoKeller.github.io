@@ -169,15 +169,14 @@ function draw(){
     xValues[count] = accelx;
     yValues[count] = accely;
     if(count >= 5) {
-    	setPointsPosition();
-    	drawAngle();
-    	checkCollision();
-    	drawPoints();    
+    	setPointsPosition(); 
     	count = 0;
     } else {
     	count += 1;
     }
-
+    drawAngle();
+    checkCollision();
+    drawPoints();
 }
 
 function setInitValueOfPoints() {
