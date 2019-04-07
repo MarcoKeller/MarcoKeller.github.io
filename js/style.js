@@ -177,7 +177,7 @@ function draw(){
 
     xValues[count] = accelx;
     yValues[count] = accely;
-    if(count >= 3) {
+    if(count >= 10) {
     	setPointsPosition(); 
     	count = 0;
     } else {
@@ -204,6 +204,7 @@ function setInitValueOfPoints() {
 			case 1:
 				INIT_X_2 = OFFSET_X + PUNKTRADIUS;
 				INIT_Y_2 = OFFSET_Y + 4.5 * PUNKTRADIUS;
+				points[1].x = INIT_X_2;
 				break;
 		}
 	} 
@@ -217,6 +218,7 @@ function setInitValueOfPoints() {
 			case 2:
 				INIT_X_3 = OFFSET_X + 7 * PUNKTRADIUS;
 				INIT_Y_3 = OFFSET_Y + PUNKTRADIUS;
+				points[2].y = INIT_Y_3;
 				break;
 		}
 	}
