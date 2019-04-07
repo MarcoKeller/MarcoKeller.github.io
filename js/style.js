@@ -208,6 +208,7 @@ function setInitValueOfPoints() {
 				points[1].x = INIT_X_2;
 				break;
 		}
+		points[1].x = INIT_X_2;
 	} 
 	if((mode == 0) || (mode == 2)) {
 		//Horizontal
@@ -223,6 +224,7 @@ function setInitValueOfPoints() {
 				points[2].y = INIT_Y_3;
 				break;
 		}
+		points[2].y = INIT_Y_3;
 	}
 }
 
