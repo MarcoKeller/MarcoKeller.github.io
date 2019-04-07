@@ -392,13 +392,14 @@ function drawPoints() {
 
 function getXAngle() {
 	var dif = INIT_X_3 - points[2].x;
-	var angle = (90 / 1480) * dif;
-	return angle.toFixed(1);
+	var angle = (90 / 1475) * dif;
+	return angle.toFixed(0);
 }
 
 function getYAngle() {
-	var dif = (accely / 10) * 90;
-	return dif.toFixed(1);
+	var dif = INIT_X_2 - points[1].y;
+	var angle = (90 / 1475) * dif;
+	return dif.toFixed(0);
 }
 
 function drawAngle() {
