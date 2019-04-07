@@ -316,17 +316,17 @@ function setPointsPosition() {
 	switch(mode) {
 		case 0:
 			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
-    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * average(xValues) + 0.4 * PUNKTRADIUS;
+    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * average(xValues) + 0.45 * PUNKTRADIUS;
 
    			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
 
-   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues) + 0.4 * PUNKTRADIUS;
+   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues) + 0.45 * PUNKTRADIUS;
 			break;
 		case 1:
 			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
 			break;
 		case 2:
-			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues) + 0.4 * PUNKTRADIUS;
+			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues) + 0.45 * PUNKTRADIUS;
 			break;
 	}
 }
