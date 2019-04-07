@@ -134,7 +134,7 @@ function draw(){
     setScreen();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    mode = 2;
+    //mode = 2;
 	
 	switch(mode) {
         case 0:
