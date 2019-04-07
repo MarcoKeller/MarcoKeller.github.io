@@ -178,11 +178,12 @@ function draw(){
     xValues[count] = accelx;
     yValues[count] = accely;
     if(count >= 10) {
-    	setPointsPosition(); 
+    	
     	count = 0;
     } else {
     	count += 1;
     }
+    setPointsPosition(); 
     drawAngle();
     checkCollision();
     drawPoints();
