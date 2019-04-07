@@ -429,7 +429,7 @@ function drawPoints() {
 function getXAngle() {
 	var dif = INIT_X_3 - points[2].x;
 	var angle = 0.0008 * accelx^5 - 0.0563 * accelx ^ 3 + 6.8824 * accelx;
-	return angle.toFixed(0);
+	return dif.toFixed(0);
 }
 
 function getYAngle() {
