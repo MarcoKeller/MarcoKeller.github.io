@@ -35,6 +35,9 @@ var INIT_X_3;
 var INIT_Y_3;
 
 var points = [];
+points[0] = { x: 0, y: 0, radius: 0 };
+points[1] = { x: 0, y: 0, radius: 0 };
+points[2] = { x: 0, y: 0, radius: 0 };
 
 var count;
 var xValues = [];
@@ -205,7 +208,7 @@ function setInitValueOfPoints() {
 			case 1:
 				INIT_X_2 = OFFSET_X + PUNKTRADIUS;
 				INIT_Y_2 = OFFSET_Y + 4.5 * PUNKTRADIUS;
-				points[1].x = INIT_X_2;
+				//points[1].x = INIT_X_2;
 				break;
 		}
 		points[1].x = INIT_X_2;
@@ -221,11 +224,13 @@ function setInitValueOfPoints() {
 			case 2:
 				INIT_X_3 = OFFSET_X + 7 * PUNKTRADIUS;
 				INIT_Y_3 = OFFSET_Y + PUNKTRADIUS;
-				points[2].y = INIT_Y_3;
+				//points[2].y = INIT_Y_3;
 				break;
 		}
 		points[2].y = INIT_Y_3;
 	}
+	
+	
 }
 
 function drawBackgroundVertical() {
