@@ -36,6 +36,9 @@ var INIT_Y_3;
 
 var points = [];
 
+var count;
+var xValues = [];
+var yValues = [];
 // Anzeigemodus (0 = Alles, 1 = Vertical, 2 = Horizontal)
 var mode = 0;
 
@@ -84,7 +87,9 @@ function startWasserwaage() {
     setScreen();
     accelx = 0.0;
     accely = 0.0;
-    accelz = 0.0;   
+    accelz = 0.0;  
+
+    count = 0; 
 
     // Aktuallisierungsintervall starten
     refresh = 75;
@@ -161,29 +166,36 @@ function draw(){
             break;
     }
 
-    setPointsPosition();
-    drawAngle();
-    checkCollision();
-    drawPoints();    
-    
+    xValues[count] = accelx;
+    yValues[count] = accely;
+    if(count >= 10) {
+    	setPointsPosition();
+    	drawAngle();
+    	checkCollision();
+    	drawPoints();    
+    	count = 0;
+    } else {
+    	count += 1;
+    }
+
 }
 
 function setInitValueOfPoints() {
 	if(mode == 0) {
 		//Kreis
-		INIT_X_1 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
-		INIT_Y_1 = OFFSET_Y + KREISRADIUS;
+		INIT_X_1 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS + 0.4 * PUNKTRADIUS;
+		INIT_Y_1 = OFFSET_Y + KREISRADIUS - 0.2 * PUNKTRADIUS;
 	}
 	if((mode == 0) || (mode == 1)) {
 		//Vertikal
 		switch(mode) {
 			case 0:
-				INIT_X_2 = OFFSET_X + PUNKTRADIUS;
-				INIT_Y_2 = OFFSET_Y + KREISRADIUS;
+				INIT_X_2 = OFFSET_X + PUNKTRADIUS + 0.4 * PUNKTRADIUS;
+				INIT_Y_2 = OFFSET_Y + KREISRADIUS - 0.2 * PUNKTRADIUS;
 				break;
 			case 1:
-				INIT_X_2 = OFFSET_X + PUNKTRADIUS;
-				INIT_Y_2 = OFFSET_Y + 4.5 * PUNKTRADIUS;
+				INIT_X_2 = OFFSET_X + PUNKTRADIUS + 0.4 * PUNKTRADIUS;
+				INIT_Y_2 = OFFSET_Y + 4.5 * PUNKTRADIUS - 0.2 * PUNKTRADIUS;
 				break;
 		}
 	} 
@@ -191,12 +203,12 @@ function setInitValueOfPoints() {
 		//Horizontal
 		switch(mode) {
 			case 0:
-				INIT_X_3 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
-				INIT_Y_3 = OFFSET_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS;
+				INIT_X_3 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS + 0.4 * PUNKTRADIUS;
+				INIT_Y_3 = OFFSET_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS - 0.2 * PUNKTRADIUS;
 				break;
 			case 2:
-				INIT_X_3 = OFFSET_X + 7 * PUNKTRADIUS;
-				INIT_Y_3 = OFFSET_Y + PUNKTRADIUS;
+				INIT_X_3 = OFFSET_X + 7 * PUNKTRADIUS + 0.4 * PUNKTRADIUS;
+				INIT_Y_3 = OFFSET_Y + PUNKTRADIUS - 0.2 * PUNKTRADIUS;
 				break;
 		}
 	}
@@ -287,21 +299,29 @@ function drawBackgroundAll() {
         ctx.stroke();
 }
 
+function average(values) {
+	var sum = 0;
+	for (var i = 0; i < values.length; i++) {
+		sum += values[i];
+	}
+	return (sum / values.length);
+}
+
 function setPointsPosition() {
 	switch(mode) {
 		case 0:
-			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * accely - 0.2 * PUNKTRADIUS;
-    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * accelx + 0.4 * PUNKTRADIUS;
+			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * average(yValues);
+    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * average(xValues);
 
-   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * accely - 0.2 * PUNKTRADIUS;
+   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues);// - 0.2 * PUNKTRADIUS;
 
-   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * accelx + 0.4 * PUNKTRADIUS;
+   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues);// + 0.4 * PUNKTRADIUS;
 			break;
 		case 1:
-			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * accely - 0.2 * PUNKTRADIUS;
+			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues);// - 0.2 * PUNKTRADIUS;
 			break;
 		case 2:
-			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * accelx + 0.4 * PUNKTRADIUS;
+			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues);// + 0.4 * PUNKTRADIUS;
 			break;
 	}
 }
