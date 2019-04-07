@@ -290,18 +290,18 @@ function drawBackgroundAll() {
 function setPointsPosition() {
 	switch(mode) {
 		case 0:
-			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * accely;
-    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * accelx;
+			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * accely + 0.25 * PUNKTRADIUS;
+    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * accelx + 0.25 * PUNKTRADIUS;
 
-   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * accely;
+   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * accely + 0.25 * PUNKTRADIUS;
 
-   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * accelx;
+   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * accelx + 0.25 * PUNKTRADIUS;
 			break;
 		case 1:
-			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * accely;
+			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * accely + 0.25 * PUNKTRADIUS;
 			break;
 		case 2:
-			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * accelx;
+			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * accelx + 0.25 * PUNKTRADIUS;
 			break;
 	}
 }
@@ -397,7 +397,7 @@ function getXAngle() {
 }
 
 function getYAngle() {
-	var dif = INIT_X_2 - points[1].y;
+	var dif = INIT_Y_2 - points[1].y;
 	var angle = (90 / 1475) * dif;
 	return dif.toFixed(0);
 }
