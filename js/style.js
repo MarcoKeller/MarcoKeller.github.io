@@ -89,6 +89,15 @@ function startWasserwaage() {
     accely = 0.0;
     accelz = 0.0;  
 
+    //Initialisieren der Punkte auf mode 0
+    PUNKTRADIUS = 25;
+	KREISRADIUS = 6.5 * PUNKTRADIUS;
+	OFFSET_X = 220; 
+	OFFSET_Y = 10;
+	setInitValueOfPoints();
+    points[0] = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
+	points[1] = { x: INIT_X_2, y: INIT_Y_2, radius: PUNKTRADIUS };
+	points[2] = { x: INIT_X_3, y: INIT_Y_3, radius: PUNKTRADIUS };
     count = 0; 
 
     // Aktuallisierungsintervall starten
