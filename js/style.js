@@ -202,7 +202,6 @@ function setInitValueOfPoints() {
 				INIT_X_2 = OFFSET_X + PUNKTRADIUS;
 				INIT_Y_2 = OFFSET_Y + KREISRADIUS;
 				points[1].x = INIT_X_2;
-				points[1].y = INIT_Y_2;
 				break;
 			case 1:
 				INIT_X_2 = OFFSET_X + PUNKTRADIUS;
@@ -217,7 +216,6 @@ function setInitValueOfPoints() {
 			case 0:
 				INIT_X_3 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
 				INIT_Y_3 = OFFSET_Y + DIFF_KREIS_RECHTECK + PUNKTRADIUS + 2 * KREISRADIUS;
-				points[2].x = INIT_X_3;
 				points[2].y = INIT_Y_3;
 				break;
 			case 2:
