@@ -92,7 +92,7 @@ function startWasserwaage() {
     count = 0; 
 
     // Aktuallisierungsintervall starten
-    refresh = 75;
+    refresh = 50;
     mode = 0;
 	refreshID = setInterval(draw, refresh);
     canvas.webkitRequestFullScreen();
@@ -168,7 +168,7 @@ function draw(){
 
     xValues[count] = accelx;
     yValues[count] = accely;
-    if(count >= 10) {
+    if(count >= 5) {
     	setPointsPosition();
     	drawAngle();
     	checkCollision();
