@@ -177,7 +177,7 @@ function draw(){
 
     xValues[count] = accelx;
     yValues[count] = accely;
-    if(count >= 5) {
+    if(count >= 3) {
     	setPointsPosition(); 
     	count = 0;
     } else {
@@ -220,9 +220,6 @@ function setInitValueOfPoints() {
 				break;
 		}
 	}
-	//points[0] = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
-	//points[1] = { x: INIT_X_2, y: INIT_Y_2, radius: PUNKTRADIUS };
-	//points[2] = { x: INIT_X_3, y: INIT_Y_3, radius: PUNKTRADIUS };
 }
 
 function drawBackgroundVertical() {
@@ -318,18 +315,18 @@ function average(values) {
 function setPointsPosition() {
 	switch(mode) {
 		case 0:
-			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * average(yValues);
-    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * average(xValues);
+			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
+    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * average(xValues) + 0.4 * PUNKTRADIUS;
 
-   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues);// - 0.2 * PUNKTRADIUS;
+   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
 
-   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues);// + 0.4 * PUNKTRADIUS;
+   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues) + 0.4 * PUNKTRADIUS;
 			break;
 		case 1:
-			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues);// - 0.2 * PUNKTRADIUS;
+			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
 			break;
 		case 2:
-			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues);// + 0.4 * PUNKTRADIUS;
+			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues) + 0.4 * PUNKTRADIUS;
 			break;
 	}
 }
