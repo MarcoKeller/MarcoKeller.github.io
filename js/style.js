@@ -191,8 +191,8 @@ function draw(){
 function setInitValueOfPoints() {
 	if(mode == 0) {
 		//Kreis
-		INIT_X_1 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS + 0.4 * PUNKTRADIUS;
-		INIT_Y_1 = OFFSET_Y + KREISRADIUS - 0.2 * PUNKTRADIUS;
+		INIT_X_1 = OFFSET_X + 2 * PUNKTRADIUS + DIFF_KREIS_RECHTECK + KREISRADIUS;
+		INIT_Y_1 = OFFSET_Y + KREISRADIUS;
 	}
 	if((mode == 0) || (mode == 1)) {
 		//Vertikal
@@ -315,12 +315,12 @@ function average(values) {
 function setPointsPosition() {
 	switch(mode) {
 		case 0:
-			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
-    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * average(xValues) + 0.4 * PUNKTRADIUS;
+			points[0].y = INIT_Y_1 + 3 * PUNKTRADIUS * average(yValues);// - 0.2 * PUNKTRADIUS;
+    		points[0].x = INIT_X_1 + 3 * PUNKTRADIUS * average(xValues);// + 0.4 * PUNKTRADIUS;
 
-   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
+   			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues);// - 0.2 * PUNKTRADIUS;
 
-   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues) + 0.4 * PUNKTRADIUS;
+   			points[2].x = INIT_X_3 + 3 * PUNKTRADIUS * average(xValues);// + 0.4 * PUNKTRADIUS;
 			break;
 		case 1:
 			points[1].y = INIT_Y_2 + 3 * PUNKTRADIUS * average(yValues) - 0.2 * PUNKTRADIUS;
