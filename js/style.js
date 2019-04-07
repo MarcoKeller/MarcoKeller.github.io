@@ -211,9 +211,9 @@ function setInitValueOfPoints() {
 				break;
 		}
 	}
-	points[0] = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
-	points[1] = { x: INIT_X_2, y: INIT_Y_2, radius: PUNKTRADIUS };
-	points[2] = { x: INIT_X_3, y: INIT_Y_3, radius: PUNKTRADIUS };
+	//points[0] = { x: INIT_X_1, y: INIT_Y_1, radius: PUNKTRADIUS };
+	//points[1] = { x: INIT_X_2, y: INIT_Y_2, radius: PUNKTRADIUS };
+	//points[2] = { x: INIT_X_3, y: INIT_Y_3, radius: PUNKTRADIUS };
 }
 
 function drawBackgroundVertical() {
