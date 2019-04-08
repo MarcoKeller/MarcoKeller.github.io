@@ -27,7 +27,7 @@ header #landscape{
 
 header #landscape p {
   float:left;
-  margin: 15px 15px 15px 15px;
+  margin: 15px 15px 15px 5px;
 }
 
 header #landscape #startButton{
@@ -35,8 +35,8 @@ header #landscape #startButton{
   border-radius: 8px;
   font-size:16px;
   font-weight:bold;
-  padding: 5px 20px 3px 20px;
-  margin: 10px 15px 15px 15px;
+  padding: 10px 20px 10px 20px;
+  margin: 5px 5px 15px 0px;
   background: #FF8000;
   color:#FFFFFF;
 
@@ -56,4 +56,22 @@ header #headlabel h1{
   margin:0;
 }
 
+@media(max-width: 1100px){
+  header #headlabel,
+  header #headlabel h1,
+  header #landscape,
+  header #landscape p{
+    float:none;
+    text-align:center;
+    width:100%;
+  }
+
+  header #landscape #startButton {
+    display:block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 25%;
+    width:50%;
+  }
+}
 

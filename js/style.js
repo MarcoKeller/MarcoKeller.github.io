@@ -108,7 +108,7 @@ function startWasserwaage() {
     mode = 0;
 	refreshID = setInterval(draw, refresh);
     canvas.webkitRequestFullScreen();
-    document.getElementById("start").disabled = "disabled";
+    document.getElementById("startButton").disabled = "disabled";
 }
 
 function initCanvas(){
