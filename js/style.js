@@ -116,7 +116,7 @@ function initCanvas(){
 	canvas.id = "myCanvas";
 	canvas.width = "800";
 	canvas.height = "400";
-	canvas.style = "border:1px solid #61210B;";		
+	canvas.style = "border:0px solid #61210B;";		
 	document.body.appendChild(canvas);
 	if(canvas.getContext){
         ctx = canvas.getContext('2d');
@@ -186,7 +186,7 @@ function draw(){
     	count += 1;
     }
     setPointsPosition(); 
-    drawAngle();
+    //drawAngle();
     checkCollision();
     drawPoints();
 }
@@ -426,7 +426,7 @@ function drawPoints() {
         }
 }
 
-function getXAngle() {
+/*function getXAngle() {
 	var dif = INIT_X_3 - points[2].x;
 	var angle = 0.0008 * accelx^5 - 0.0563 * accelx ^ 3 + 6.8824 * accelx;
 	return dif.toFixed(0);
@@ -449,7 +449,7 @@ function drawAngle() {
     	ctx.fillStyle = "#8B2323";
     	ctx.fillText("Winkel in y: " + getYAngle() + "°", 10, 22);
 	}
-}
+} */
 
 //Ermittelt die Beschleunigung entsprechend der Bildschirmorientierung
 if (window.DeviceOrientationEvent) {
@@ -489,5 +489,5 @@ if (window.DeviceOrientationEvent) {
 	    }
 	}, true);
 } else {
-    alert("Sorry, ihr Gerät unterstützt keine Bildschirmorientierung!");
+    alert("Ihr Gerät unterstützt keine Bildschirmorientierung!");
 }
